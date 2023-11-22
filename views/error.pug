@@ -1,0 +1,13 @@
+extends layout
+
+block scripts 
+  link(rel="script", href="/javascripts/collapsible.js")
+  link(rel="stylesheet", href="collapsible.css")
+
+block content
+  h1= message
+  h2= error.status
+  button(type="button").collapsible open error
+  .content 
+    p
+      pre(style="color:white;") #{error.stack}

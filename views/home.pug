@@ -1,0 +1,11 @@
+extends layout
+
+block scripts 
+    link(rel="stylesheet", href="stylesheets/hackerNews.css")
+
+block content 
+    h1 Welcome Home Friend
+    .home-search
+        img(src="/images/cb.png" width="180" height="180")
+        form(action='/search' method='GET')
+            input.home-input(autofocus='' placeholder='Search ' type='search' name='q')

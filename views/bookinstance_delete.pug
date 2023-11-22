@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1 Deleting a Book instance 
+
+    p Do you really want to Delete this Book Instance?
+
+    form(method="POST" action="")
+        div.form-group
+            input#instanceid.form-control(type="hidden",name="instanceid", required="true",value=bookinstanceID)
+
+        button.btn.btn-danger(type="submit") Delete

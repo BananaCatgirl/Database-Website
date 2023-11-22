@@ -1,0 +1,18 @@
+extends layout
+
+block scripts 
+    link(rel="stylesheet", href="/LoginStyle.css" type="text/css")
+
+block content
+    .login  
+        h1 Login 
+        form(method="post" action="/auth/login")
+            label(for="username")
+                span.fas.fa-user
+
+            input(type="text" name="username" placeholder="username" required)#username
+            label(for="password") 
+                span.fas.fa-lock 
+            input(type="password" name="password" placeholder="password" required)#password
+            input(type="submit" value="Login")
+            
