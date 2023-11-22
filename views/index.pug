@@ -1,21 +1,11 @@
-extends layout
+extends layout 
 
-block content
-  h1= title
-  p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial by Mozilla Developer Network and folowed by Bananatoast 
+block content 
+    a(href="/coin")
+        h1 wanna flip a Coin?
+    
+    a(href="/catalog")
+        h1 browse our collection of books?
 
-  h1 Dynamic content 
-
-  if videoID
-    iframe(width="560" height="315" src=`https://www.youtube-nocookie.com/embed/${videoID}?autoplay=1&mute=1`)
-
-
-  p The Library has the following record counts: 
-
-
-  ul#sidepanel 
-    li #[strong Books:] !{book_count}
-    li #[strong Copies:] !{book_instance_count}
-    li #[strong Copies available:] !{book_instance_available_count}
-    li #[strong Authors:] !{author_count}
-    li #[strong Genres:] !{genre_count}
+    a(href="/isbn")
+        h3 brows all book with a isbn number?
