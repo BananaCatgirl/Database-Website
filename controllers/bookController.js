@@ -14,7 +14,7 @@ exports.index = asyncHandler(async (req, res, next) =>
   const number = Math.floor(Math.random() * 1001);
   let vid = "dQw4w9WgXcQ";
 
-  if (number > 55)
+  if (number > 1)
   {
     vid = req.query.v || undefined;
   }

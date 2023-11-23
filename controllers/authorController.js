@@ -2,6 +2,7 @@ const Book = require("../models/book");
 const Author = require("../models/author");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const author = require('../models/author');
 
 // Display list of all Authors.
 exports.author_list = asyncHandler(async (req, res, next) =>
@@ -114,6 +115,9 @@ exports.author_delete_get = asyncHandler(async (req, res, next) =>
   if (author === null)
   {
     // No results.
+    debug(`id not forund on update: ${req.params.id}`)
+    const err = new Error("Author not found");
+    err.status = 404;
     res.redirect("/catalog/authors");
   }
 
@@ -153,12 +157,35 @@ exports.author_delete_post = asyncHandler(async (req, res, next) =>
 // Display Author update form on GET.
 exports.author_update_get = asyncHandler(async (req, res, next) =>
 {
+  const author = await Author.findById(req.params.id);
 
-
+  res.render("author_form", {
+    title: "Update a Author",
+    author: author,
+  });
 });
 
 // Handle Author update on POST.
 exports.author_update_post = asyncHandler(async (req, res, next) =>
 {
-  res.send("NOT IMPLEMENTED: Author update POST");
+  const author = await Author.findById(req.params.id);
+  const books = await Book.find({ author: "author" })
+
+
+  if (books.length > 0)
+  {
+    res.render("author_delete",{
+      title:"Delete a Book",
+      author:author,
+      books:books,
+    });
+    
+    return;
+
+  } else
+  {
+    Author.findByIdAndDelete(req.body.id)
+    res.redirect("/authors");
+  }
+
 });
