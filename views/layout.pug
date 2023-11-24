@@ -26,17 +26,25 @@ html(lang="en")
           block sidebar
             ul(class='sidebar-nav ')
               li
-                a(href='/') Home
+                a(href='/') 
+                  span.fa.fa-home 
+                  | Home
               li
-                  a(href='/catalog/books') 
-                    span.fa.fa-book
-                    | All books
+                a(href='/catalog/books') 
+                  span.fa.fa-book(style="color:000;")
+                  | All books
               li
-                a(href='/catalog/authors') All authors
+                a(href='/catalog/authors')
+                  span.fa.fa-users(style="color:000;")
+                  | All authors
               li
-                a(href='/catalog/genres') All genres
+                a(href='/catalog/genres') 
+                  span.fa.fa-list(style="color:000;")
+                  | All genres
               li
-                a(href='/catalog/bookinstances') All book-instances
+                a(href='/catalog/bookinstances')
+                  span.fa.fa-book-bookmark(style="color:000;")
+                  | All book-instances
               li
                 hr
               li
@@ -47,6 +55,10 @@ html(lang="en")
                 a(href='/catalog/book/create') Create new book
               li
                 a(href='/catalog/bookinstance/create') Create new book instance (copy)
+              hr
+
+              li 
+                a(href="/isbn") Find by ISBN
 
         div(class='col-sm-10')
           block content
