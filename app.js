@@ -12,7 +12,7 @@ var indexRouter = require('./routes/index');
 var catalogRouter = require('./routes/catalog');
 const isbnRouter = require("./routes/isbn");
 const apiV1Router = require("./routes/apiV1");
-const userRouter = require("./routes/users");
+const userRouter = require("./routes/user");
 
 var app = express();
 
@@ -68,7 +68,7 @@ app.use(compression());
 app.use('/', indexRouter);
 app.use('/catalog', catalogRouter);
 app.use('/isbn', isbnRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 app.use("/api", apiV1Router);
 
 

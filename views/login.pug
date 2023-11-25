@@ -4,15 +4,20 @@ block scripts
     link(rel="stylesheet", href="/LoginStyle.css" type="text/css")
 
 block content
-    .login  
+    .login
         h1 Login 
         form(method="post" action="/auth/login")
+            .imgcontainer 
+                img.avatar(src="images/cb.png" alt="avatar")
+
+        .container
             label(for="username")
                 span.fas.fa-user
-
             input(type="text" name="username" placeholder="username" required)#username
             label(for="password") 
                 span.fas.fa-lock 
             input(type="password" name="password" placeholder="password" required)#password
             input(type="submit" value="Login")
+            //- label(for="remember")
+            //-     input(type="checkbox" checked="unchecked" name="remember") Remember Me
             
