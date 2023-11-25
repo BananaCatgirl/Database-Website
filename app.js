@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const compression = require("compression");
 const helmet = require("helmet");
-const secrets = require("./secrets.json");
 
 //making a git commit
 
@@ -30,8 +29,11 @@ app.use(limiter);
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
+
+// const secrets = require("./secrets.json");
+const developmentURI = "mongodb+srv://developer:developer@cluster0.7zfsy9j.mongodb.net/local_library?retryWrites=true&w=majority";
 const uri = process.env.MONGODB_URI;
-const mongoDB = process.env.MONGODB_URI || secrets.Database_Token;
+const mongoDB = process.env.MONGODB_URI || developmentURI;
 main().catch((err) => console.log(err));
 async function main()
 {
