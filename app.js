@@ -31,7 +31,7 @@ mongoose.set("strictQuery", false);
 
 
 // const secrets = require("./secrets.json");
-const developmentURI = "mongodb+srv://developer:developer@cluster0.7zfsy9j.mongodb.net/local_library?retryWrites=true&w=majority";
+const developmentURI = "mongodb+srv://developer:developer@cluster0.7zfsy9j.mongodb.net/devlibrary?retryWrites=true&w=majority";
 const uri = process.env.MONGODB_URI;
 const mongoDB = process.env.MONGODB_URI || developmentURI;
 main().catch((err) => console.log(err));
