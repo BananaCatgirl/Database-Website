@@ -30,12 +30,13 @@ app.use(limiter);
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-// process.env.MONGODB_URI ||
 const uri = process.env.MONGODB_URI;
-const mongoDB = uri || secrets.Database_Token;
+const mongoDB = process.env.MONGODB_URI || secrets.Database_Token;
 main().catch((err) => console.log(err));
 async function main()
 {
+  console.log("uri is: " + uri);
+  console.log("connectiong to mongoDB: " + mongoDB);
   await mongoose.connect(mongoDB);
   console.log("connected to mongoDB");
 }
