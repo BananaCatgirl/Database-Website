@@ -3,12 +3,12 @@ extends layout
 block content
   h1= title
 
-  ul
-    each book in book_list
-      li
-        div( style="background-color: grey; min-height:50px; margin:10px;" )
-          a(href=book.url) #{book.title} 
-          |  (#{book.author.name})
+  
+  each book in book_list
+      
+    div( style="background-color: rgb(232,232,232);border: solid 1px grey; min-height:50px; margin:10px;" )
+      a(href=book.url) #{book.title} 
+      |  (#{book.author.name})
 
-    else
-      li There are no books.
+  else
+    p There are no books.

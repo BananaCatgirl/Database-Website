@@ -38,9 +38,15 @@ main().catch((err) => console.log(err));
 async function main()
 {
   console.log("uri is: " + uri);
-  console.log("connectiong to mongoDB: " + mongoDB);
-  await mongoose.connect(mongoDB);
-  console.log("connected to mongoDB");
+  console.log("connection to mongoDB: " + mongoDB);
+  if (await mongoose.connect(mongoDB))
+  {
+    console.log("connected to mongoDB");
+  }
+  else
+  {
+    console.log("error connecting to mongoDB");
+  }
 }
 
 // view engine setup
