@@ -2,11 +2,16 @@ doctype html
 html(lang="en")
     head
         meta(charset="UTF-8")
+        script(src="https://kit.fontawesome.com/9e61d75111.js" crossorigin="anonymous")
         meta( name="viewport" content="width=device-width" initial-scale="1.0")
         link(rel="icon" href="/images/favicon.png")
         title coinflip - #{flipresult}
 
     body 
+        .content(style="display:block; justify-content: center;")
+        a(href="/" name="Home" style="color: black; text-decoration: none; ") 
+            span.fa.fa-house 
+            | Home
 
         h1= flipresult
         p= time
