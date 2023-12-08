@@ -6,11 +6,10 @@ const Book = require("../models/book");
 
 
 // Display list of all BookInstances.
-exports.bookinstance_list = asyncHandler(async (req, res, next) =>
-{
+exports.bookinstance_list = asyncHandler(async (req, res, next) => {
   const allBookInstances = await BookInstance.find().populate("book").exec();
 
-  res.render("bookinstance_list", {
+  res.render("Library/bookinstance_list", {
     title: "Book Instance List",
     bookinstance_list: allBookInstances,
   });
@@ -18,32 +17,29 @@ exports.bookinstance_list = asyncHandler(async (req, res, next) =>
 
 
 // Display detail page for a specific BookInstance.
-exports.bookinstance_detail = asyncHandler(async (req, res, next) =>
-{
+exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
   const bookInstance = await BookInstance.findById(req.params.id)
     .populate("book")
     .exec();
 
-  if (bookInstance === null)
-  {
+  if (bookInstance === null) {
     // No results.
     const err = new Error("Book copy not found");
     err.status = 404;
     return next(err);
   }
 
-  res.render("bookinstance_detail", {
+  res.render("Library/bookinstance_detail", {
     title: "Book: " + req.params.id,
     bookinstance: bookInstance,
   });
 });
 
 // Display BookInstance create form on GET.
-exports.bookinstance_create_get = asyncHandler(async (req, res, next) =>
-{
+exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
   const allBooks = await Book.find({}, "title").exec();
 
-  res.render("bookinstance_form", {
+  res.render("Library/bookinstance_form", {
     title: "Create BookInstance",
     book_list: allBooks,
   });
@@ -64,8 +60,7 @@ exports.bookinstance_create_post = [
     .toDate(),
 
   // Process request after validation and sanitization.
-  asyncHandler(async (req, res, next) =>
-  {
+  asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
@@ -77,13 +72,12 @@ exports.bookinstance_create_post = [
       due_back: req.body.due_back,
     });
 
-    if (!errors.isEmpty())
-    {
+    if (!errors.isEmpty()) {
       // There are errors.
       // Render form again with sanitized values and error messages.
       const allBooks = await Book.find({}, "title").exec();
 
-      res.render("bookinstance_form", {
+      res.render("Library/bookinstance_form", {
         title: "Create BookInstance",
         book_list: allBooks,
         selected_book: bookInstance.book._id,
@@ -91,8 +85,7 @@ exports.bookinstance_create_post = [
         bookinstance: bookInstance,
       });
       return;
-    } else
-    {
+    } else {
       // Data from form is valid
       await bookInstance.save();
       res.redirect(bookInstance.url);
@@ -101,10 +94,9 @@ exports.bookinstance_create_post = [
 ];
 
 // Display BookInstance delete form on GET.
-exports.bookinstance_delete_get = asyncHandler(async (req, res, next) =>
-{
+exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
 
-  res.render("bookinstance_delete", {
+  res.render("Library/bookinstance_delete", {
     title: "Delete a Book instance",
     bookinstanceID: req.params.id,
   });
@@ -112,21 +104,18 @@ exports.bookinstance_delete_get = asyncHandler(async (req, res, next) =>
 });
 
 // Handle BookInstance delete on POST.
-exports.bookinstance_delete_post = asyncHandler(async (req, res, next) =>
-{  
+exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
   await BookInstance.findByIdAndDelete(req.body.instanceid);
-  res.redirect("/catalog/books/" );
+  res.redirect("/catalog/books/");
 
 });
 
 // Display BookInstance update form on GET.
-exports.bookinstance_update_get = asyncHandler(async (req, res, next) =>
-{
+exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: BookInstance update GET");
 });
 
 // Handle bookinstance update on POST.
-exports.bookinstance_update_post = asyncHandler(async (req, res, next) =>
-{
+exports.bookinstance_update_post = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: BookInstance update POST");
 });

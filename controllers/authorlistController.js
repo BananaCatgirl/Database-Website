@@ -13,6 +13,6 @@ exports.author_list = asyncHandler(async (req, res, next) =>
     .populate("author")
     .exec();
 
-    res.render("author_list",{title: "List of Authors",author_list: allAuthors});
+    res.render("Library/author_list",{title: "List of Authors",author_list: allAuthors});
 
 });

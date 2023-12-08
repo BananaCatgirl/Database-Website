@@ -6,16 +6,14 @@ const { body, validationResult } = require("express-validator");
 
 const asyncHandler = require("express-async-handler");
 
-exports.index = asyncHandler(async (req, res, next) =>
-{
+exports.index = asyncHandler(async (req, res, next) => {
 	// Get details of books, book instances, authors and genre counts (in parallel)
 
 	// || "dQw4w9WgXcQ"
 	const number = Math.floor(Math.random() * 1001);
 	let vid = "dQw4w9WgXcQ";
 
-	if (number > 1)
-	{
+	if (number > 1) {
 		vid = req.query.v || undefined;
 	}
 
@@ -34,7 +32,7 @@ exports.index = asyncHandler(async (req, res, next) =>
 		Genre.countDocuments({}).exec(),
 	]);
 
-	res.render("catalog", {
+	res.render("Library/catalog", {
 		title: "Local Library - Home",
 		book_count: numBooks,
 		book_instance_count: numBookInstances,
@@ -45,48 +43,44 @@ exports.index = asyncHandler(async (req, res, next) =>
 	});
 });
 // Display list of all books.
-exports.book_list = asyncHandler(async (req, res, next) =>
-{
+exports.book_list = asyncHandler(async (req, res, next) => {
 	const allBooks = await Book.find({}, "title author")
 		.sort({ title: 1 })
 		.populate("author")
 		.exec();
 
-	res.render("book_list", { title: "Book List", book_list: allBooks });
+	res.render("Library/book_list", { title: "Book List", book_list: allBooks });
 });
 // Display detail page for a specific book.
-exports.book_detail = asyncHandler(async (req, res, next) =>
-{
+exports.book_detail = asyncHandler(async (req, res, next) => {
 	// Get details of books, book instances for specific book
 	const [book, bookInstances] = await Promise.all([
 		Book.findById(req.params.id).populate("author").populate("genre").exec(),
 		BookInstance.find({ book: req.params.id }).exec(),
 	]);
 
-	if (book === null)
-	{
+	if (book === null) {
 		// No results.
 		const err = new Error("Book not found");
 		err.status = 404;
 		return next(err);
 	}
 
-	res.render("book_detail", {
+	res.render("Library/book_detail", {
 		title: book.title + " - Local Library",
 		book: book,
 		book_instances: bookInstances,
 	});
 });
 // Display book create form on GET.
-exports.book_create_get = asyncHandler(async (req, res, next) =>
-{
+exports.book_create_get = asyncHandler(async (req, res, next) => {
 	// Get all authors and genres, which we can use for adding to our book.
 	const [allAuthors, allGenres] = await Promise.all([
 		Author.find().exec(),
 		Genre.find().exec(),
 	]);
 
-	res.render("book_form", {
+	res.render("Library/book_form", {
 		title: "Create Book",
 		authors: allAuthors,
 		genres: allGenres,
@@ -95,10 +89,8 @@ exports.book_create_get = asyncHandler(async (req, res, next) =>
 // Handle book create on POST.
 exports.book_create_post = [
 	// Convert the genre to an array.
-	(req, res, next) =>
-	{
-		if (!(req.body.genre instanceof Array))
-		{
+	(req, res, next) => {
+		if (!(req.body.genre instanceof Array)) {
 			if (typeof req.body.genre === "undefined") req.body.genre = [];
 			else req.body.genre = new Array(req.body.genre);
 		}
@@ -122,8 +114,7 @@ exports.book_create_post = [
 	body("genre.*").escape(),
 	// Process request after validation and sanitization.
 
-	asyncHandler(async (req, res, next) =>
-	{
+	asyncHandler(async (req, res, next) => {
 		// Extract the validation errors from a request.
 		const errors = validationResult(req);
 
@@ -136,8 +127,7 @@ exports.book_create_post = [
 			genre: req.body.genre,
 		});
 
-		if (!errors.isEmpty())
-		{
+		if (!errors.isEmpty()) {
 			// There are errors. Render form again with sanitized values/error messages.
 
 			// Get all authors and genres for form.
@@ -147,22 +137,19 @@ exports.book_create_post = [
 			]);
 
 			// Mark our selected genres as checked.
-			for (const genre of allGenres)
-			{
-				if (book.genre.includes(genre._id))
-				{
+			for (const genre of allGenres) {
+				if (book.genre.includes(genre._id)) {
 					genre.checked = "true";
 				}
 			}
-			res.render("book_form", {
+			res.render("Library/book_form", {
 				title: "Create Book",
 				authors: allAuthors,
 				genres: allGenres,
 				book: book,
 				errors: errors.array(),
 			});
-		} else
-		{
+		} else {
 			// Data from form is valid. Save book.
 			await book.save();
 			res.redirect(book.url);
@@ -170,36 +157,32 @@ exports.book_create_post = [
 	}),
 ];
 // Display book delete form on GET.
-exports.book_delete_get = asyncHandler(async (req, res, next) =>
-{
+exports.book_delete_get = asyncHandler(async (req, res, next) => {
 	const book = await Book.findById(req.params.id);
 
 
 	const allInstaces = await BookInstance.find({ book: req.params.id }).exec();
 
 
-	res.render("book_delete", {
+	res.render("Library/book_delete", {
 		title: "Delete a Book",
 		book: book,
 		bookinstances: allInstaces,
 	});
 });
 // Handle book delete on POST.
-exports.book_delete_post = asyncHandler(async (req, res, next) =>
-{
+exports.book_delete_post = asyncHandler(async (req, res, next) => {
 	const book = await Book.findById(req.params.id);
 	const allInstaces = await BookInstance.find({ book: req.params.id }).exec();
 
-	if (allInstaces > 0)
-	{
-		res.render("book_delete", {
+	if (allInstaces > 0) {
+		res.render("Library/book_delete", {
 			title: "Delete a Book",
 			book: book,
 			bookinstances: allInstaces,
 		});
 		return;
-	} else
-	{
+	} else {
 		await Book.findByIdAndDelete(req.body.bookid);
 		res.redirect("/catalog/books");
 	}
@@ -207,8 +190,7 @@ exports.book_delete_post = asyncHandler(async (req, res, next) =>
 
 });
 // Display book update form on GET.
-exports.book_update_get = asyncHandler(async (req, res, next) =>
-{
+exports.book_update_get = asyncHandler(async (req, res, next) => {
 	// Get book, authors and genres for form.
 	const [book, allAuthors, allGenres] = await Promise.all([
 		Book.findById(req.params.id).populate("author").populate("genre").exec(),
@@ -216,8 +198,7 @@ exports.book_update_get = asyncHandler(async (req, res, next) =>
 		Genre.find().exec(),
 	]);
 
-	if (book === null)
-	{
+	if (book === null) {
 		// No results.
 		const err = new Error("Book not found");
 		err.status = 404;
@@ -225,18 +206,15 @@ exports.book_update_get = asyncHandler(async (req, res, next) =>
 	}
 
 	// Mark our selected genres as checked.
-	for (const genre of allGenres)
-	{
-		for (const book_g of book.genre)
-		{
-			if (genre._id.toString() === book_g._id.toString())
-			{
+	for (const genre of allGenres) {
+		for (const book_g of book.genre) {
+			if (genre._id.toString() === book_g._id.toString()) {
 				genre.checked = "true";
 			}
 		}
 	}
 
-	res.render("book_form", {
+	res.render("Library/book_form", {
 		title: "Update Book",
 		authors: allAuthors,
 		genres: allGenres,
@@ -246,15 +224,11 @@ exports.book_update_get = asyncHandler(async (req, res, next) =>
 // Handle book update on POST.
 exports.book_update_post = [
 	// Convert the genre to an array.
-	(req, res, next) =>
-	{
-		if (!(req.body.genre instanceof Array))
-		{
-			if (typeof req.body.genre === "undefined")
-			{
+	(req, res, next) => {
+		if (!(req.body.genre instanceof Array)) {
+			if (typeof req.body.genre === "undefined") {
 				req.body.genre = [];
-			} else
-			{
+			} else {
 				req.body.genre = new Array(req.body.genre);
 			}
 		}
@@ -278,8 +252,7 @@ exports.book_update_post = [
 	body("genre.*").escape(),
 
 	// Process request after validation and sanitization.
-	asyncHandler(async (req, res, next) =>
-	{
+	asyncHandler(async (req, res, next) => {
 		// Extract the validation errors from a request.
 		const errors = validationResult(req);
 
@@ -293,8 +266,7 @@ exports.book_update_post = [
 			_id: req.params.id, // This is required, or a new ID will be assigned!
 		});
 
-		if (!errors.isEmpty())
-		{
+		if (!errors.isEmpty()) {
 			// There are errors. Render form again with sanitized values/error messages.
 
 			// Get all authors and genres for form
@@ -304,14 +276,12 @@ exports.book_update_post = [
 			]);
 
 			// Mark our selected genres as checked.
-			for (const genre of allGenres)
-			{
-				if (book.genre.indexOf(genre._id) > -1)
-				{
+			for (const genre of allGenres) {
+				if (book.genre.indexOf(genre._id) > -1) {
 					genre.checked = "true";
 				}
 			}
-			res.render("book_form", {
+			res.render("Library/book_form", {
 				title: "Update Book",
 				authors: allAuthors,
 				genres: allGenres,
@@ -319,8 +289,7 @@ exports.book_update_post = [
 				errors: errors.array(),
 			});
 			return;
-		} else
-		{
+		} else {
 			// Data from form is valid. Update the record.
 			const updatedBook = await Book.findByIdAndUpdate(req.params.id, book, {});
 			// Redirect to book detail page.
