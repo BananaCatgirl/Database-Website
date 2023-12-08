@@ -6,7 +6,6 @@ var logger = require('morgan');
 const compression = require("compression");
 const helmet = require("helmet");
 
-//making a git commit
 
 var indexRouter = require('./routes/index');
 var catalogRouter = require('./routes/catalog');
@@ -35,16 +34,13 @@ const developmentURI = "mongodb+srv://developer:developer@cluster0.7zfsy9j.mongo
 const uri = process.env.MONGODB_URI;
 const mongoDB = process.env.MONGODB_URI || developmentURI;
 main().catch((err) => console.log(err));
-async function main()
-{
+async function main() {
   console.log("uri is: " + uri);
   console.log("connection to mongoDB: " + mongoDB);
-  if (await mongoose.connect(mongoDB))
-  {
+  if (await mongoose.connect(mongoDB)) {
     console.log("connected to mongoDB");
   }
-  else
-  {
+  else {
     console.log("error connecting to mongoDB");
   }
 }
@@ -79,14 +75,12 @@ app.use("/api", apiV1Router);
 
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next)
-{
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next)
-{
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
