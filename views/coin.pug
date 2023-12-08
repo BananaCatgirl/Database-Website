@@ -8,10 +8,10 @@ html(lang="en")
         title coinflip - #{flipresult}
 
     body 
-        .content(style="display:block; justify-content: center;")
-        a(href="/" name="Home" style="color: black; text-decoration: none; ") 
-            span.fa.fa-house 
-            | Home
+        .content.col-sm-10(style="display:block; justify-content: center; background-color: red; padding: 2px; border-radius: 5px;")
+            a(href="/" name="Home" style="color: black; text-decoration: none; ") 
+                span.fa.fa-house 
+                | Home
 
-        h1= flipresult
-        p= time
+            h1= flipresult
+            p= time

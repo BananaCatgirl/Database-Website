@@ -12,6 +12,7 @@ var catalogRouter = require('./routes/catalog');
 const isbnRouter = require("./routes/isbn");
 const apiV1Router = require("./routes/apiV1");
 const userRouter = require("./routes/user");
+const fischertechnik_router = require("./routes/fischertechnik");
 
 var app = express();
 
@@ -68,6 +69,7 @@ app.use(compression());
 // );
 
 app.use('/', indexRouter);
+app.use("/fischertechnik", fischertechnik_router);
 app.use('/catalog', catalogRouter);
 app.use('/isbn', isbnRouter);
 app.use("/user", userRouter);
