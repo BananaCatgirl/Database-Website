@@ -1,5 +1,16 @@
 var express = require('express');
 var router = express.Router();
+const accountManagement = require("../controllers/accountManagement");
+
+
+
+
+
+router.get("/register", accountManagement.register_get);
+router.post("/register", accountManagement.register_post);
+
+router.get("/login", accountManagement.login);
+// router.post("/login", accountManagement.login);
 
 /* GET users listing. */
 router.get('/', function (req, res, next)
@@ -15,7 +26,5 @@ router.get('/', function (req, res, next)
 	}
 
 });
-
-
 
 module.exports = router;

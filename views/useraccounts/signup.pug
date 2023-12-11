@@ -1,1 +1,10 @@
 extends ../layout/layout.pug
+
+block content 
+	div.row.justify-contnent-md-center(style="margin-top: 30px;")
+		div.col-md-4
+			form(methode="POST" action="/register") 
+				.form-group 
+					label(for="firstName") First Name 
+					input.form-control(name="firstName" type="text" id="firstName") 
+					

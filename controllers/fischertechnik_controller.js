@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
-exports.dashboard = asynchandler(async (req, res, next) => {
+exports.dashboard = asyncHandler(async (req, res, next) =>
+{
 
     res.send("hello");
 });
