@@ -1,11 +1,22 @@
 extends layout/layout.pug 
 
+block scripts 
+    link(rel="stylesheet", href="/stylesheets/ChaosTheme.css")
+
 block content 
-    a(href="/coin")
-        h1 wanna flip a Coin?
+    .container 
+
+        a.card(href="/coin")
+            .pictureContainer
+                img(src="images/coin.png", alt="image link for flipping a coin")
+            .name
+                h1 wanna flip a Coin?
+            .buyContainer
+                p hello world 
+
     
-    a(href="/catalog")
-        h1 browse our collection of books?
+        a(href="/catalog")
+            h1 browse our collection of books?
 
     //- a(href="/isbn")
     //-     h3 browse all book with a isbn number?

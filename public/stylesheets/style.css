@@ -1,10 +1,11 @@
-
 .sidebar-nav {
+  background-color: rgb(241, 243, 246);
   color: black;
-  margin-top: 20px;
-  padding: 0;
+  margin-top: 10px;
+  padding: 0px;
+  padding-bottom: 10px;
   list-style: none;
-  min-height: 50px;
+  min-height: 100px;
 }
 
 .sidebar-nav a {
