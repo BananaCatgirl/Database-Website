@@ -25,42 +25,41 @@ html(lang="en")
             ul(class='sidebar-nav ')
               li
                 a(href='/') 
-                  span.fa.fa-home 
+                  span.fa.fa-home(title="Home")
                   | Home
               li 
                 a(href=`/catalog`)
-                  span.fa.fa-book-open(style="color:000;")
+                  span.fa.fa-book-open(style="color:000;" title="Catalog")
                   | Catalog
               li
                 a(href='/catalog/books') 
-                  span.fa.fa-book(style="color:000;")
-                  | All books
+                  span.fa.fa-book(style="color:000;" title="All Books")
+                  | All Books
               li
                 a(href='/catalog/authors')
-                  span.fa.fa-users(style="color:000;")
-                  | All authors
+                  span.fa.fa-users(style="color:000;" title="All Authors")
+                  | All Authors
               li
                 a(href='/catalog/genres') 
-                  span.fa.fa-list(style="color:000;")
-                  | All genres
+                  span.fa.fa-list(style="color:000;" title="All Genres")
+                  | All Genres
               li
                 a(href='/catalog/bookinstances')
-                  span.fa.fa-book-bookmark(style="color:000;")
-                  | All book-instances
+                  span.fa.fa-book-bookmark(style="color:000;" title="All Books in Storage")
+                  | All Book-Instances
               li
                 hr
               li
-                a(href='/catalog/author/create') Create new author
+                a(href='/catalog/author/create') Create new Author
               li
-                a(href='/catalog/genre/create') Create new genre
+                a(href='/catalog/genre/create') Create new Genre
               li
-                a(href='/catalog/book/create') Create new book
+                a(href='/catalog/book/create') Create new Book
               li
-                a(href='/catalog/bookinstance/create') Create new book instance (copy)
+                a(href='/catalog/bookinstance/create') Create new book Instance (copy)
               hr
 
               li 
                 a(href="/isbn") Find by ISBN
-
         div(class='col-sm-10')
           block content
